@@ -1,0 +1,36 @@
+body {
+    margin: 50px 0 0 0;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.navbar {
+    position: absolute;
+    z-index: 99999;
+    overflow: hidden;
+    background-color: #ff9800;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: top 0.3s;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar a:hover {
+    background: #ddd;
+    color: black;
+}
+
+@media screen and (max-width: 960px) {
+  .navbar a {
+    font-size: 13px;
+  }
+}

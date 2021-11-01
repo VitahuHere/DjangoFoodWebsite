@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Comp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link href="{% static 'base bar.css' %}" rel="stylesheet">
+
+    {% block header %}
+    {% endblock %}
+</head>
+
+<style>
+    {% block stylist %}
+    {% endblock %}
+</style>
+
+<script src="{% static 'base bar.js' %}"></script>
+
+<body>
+<div class="navbar" id="navbar">
+    <a href="/">Home</a>
+    <a href="/products/">Our products</a>
+    <a href="/contact/">Contact</a>
+    <a href="/about/">About Me</a>
+    <a href="/login/" style="float: right">Login</a>
+    <a href="/register/" style="float: right">Register</a>
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>
