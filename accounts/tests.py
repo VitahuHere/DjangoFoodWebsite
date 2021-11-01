@@ -14,3 +14,4 @@ class DataTestCase(TestCase):
         self.assertEqual(r.surname, "Roger")
         self.assertNotEqual(r.age, 202)
         self.assertEqual(r.height, 174)
+        self.assertEqual(Person.objects.all().count(), 2)
