@@ -7,11 +7,11 @@
 
 {% block content %}
 <div class="content">
-    <form action="/post/register/data/">
+    <form action="/post/register/data/" method="POST"> {% csrf_token %}
         <label for="username">Your username:</label>
         <input id="username" type="text" name="username" placeholder="username" minlength="2"><br>
         <label for="password">Your Password</label>
-        <input id="password" type="text" name="password" placeholder="password" minlength="8"><br>
+        <input id="password" type="password" name="password" placeholder="password" minlength="8"><br>
         <input type="submit" value="Register">
     </form>
 </div>
