@@ -1,0 +1,13 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+<link href="{% static 'accounts/redirect register.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <script src="{% static 'accounts/redirect register.js' %}"></script>
+    <div class="grid">
+        <span>LOGIN ALREADY EXISTS... REDIRECTING</span>
+    </div>
+{% endblock %}

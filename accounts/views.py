@@ -1,10 +1,8 @@
-import datetime
 import hashlib
 
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 from .forms import RegisterForm
-from accounts.models import Person
+from accounts.models import PersonForm, Person
 
 
 def register(request):
@@ -12,15 +10,19 @@ def register(request):
 
 
 def post_new_account(request):
+    login = hashlib.sha256(request.POST['login'].encode()).hexdigest()
     if request.method == 'POST':
-        rq = request.POST
-        Person.objects.create(login=rq['login'],
-                              name=rq['name'],
-                              password=hashlib.sha256(request.POST['password'].encode()).hexdigest(),
-                              surname=rq['surname'],
-                              birthday=datetime.date(year=int(rq['birthday_year']),
-                                                     month=int(rq['birthday_month']),
-                                                     day=int(rq['birthday_day'])),
-                              weight=rq['weight'],
-                              height=rq['height'])
-    return HttpResponse(request)
+        if Person.objects.filter(pk=login).exists():
+            return render(request, 'accounts/redirect_register.html')
+        else:
+            p = PersonForm(request.POST)
+            new = p.save(commit=False)
+            new.password = hashlib.sha256(request.POST['password'].encode()).hexdigest()
+            new.login = login
+            new.save()
+            p.save_m2m()
+    return redirect('/account/')
+
+
+def account(request):
+    return HttpResponse("nothing here")
