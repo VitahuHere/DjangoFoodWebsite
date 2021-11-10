@@ -1,0 +1,13 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+<link href="{% static 'accounts/register existing login.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <script src="{% static 'accounts/redirect login.js' %}"></script>
+    <div class="grid">
+        <span>WRONG LOGIN OR PASSWORD... REDIRECTING</span>
+    </div>
+{% endblock %}

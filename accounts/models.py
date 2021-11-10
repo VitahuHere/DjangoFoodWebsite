@@ -9,7 +9,7 @@ class Person(models.Model):
     name = models.CharField(max_length=100, default=None)
     surname = models.CharField(max_length=100, default=None)
     birthday = models.DateField(blank=True, null=True)
-    weight = models.DecimalField(max_digits=5, decimal_places=1, validators=[MinValueValidator(1)], default=None)
+    weight = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(1)], default=None)
     height = models.PositiveIntegerField(validators=[MaxValueValidator(999), MinValueValidator(1)], default=None)
 
 
