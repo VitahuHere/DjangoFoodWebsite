@@ -4,7 +4,7 @@ from accounts.models import Person
 
 
 def get_account_data(request, pk):
-    obj = Person.objects.get(id=pk)
+    obj = Person.objects.get(login=pk)
     r = model_to_dict(obj)
     return JsonResponse(r)
 
