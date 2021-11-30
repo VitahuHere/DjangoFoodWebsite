@@ -17,3 +17,9 @@ class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = ['login', 'password', 'name', 'surname', 'birthday', 'weight', 'height']
+
+
+class LoggingForm(ModelForm):
+    class Meta:
+        model = Person
+        fields = ['login', 'password']

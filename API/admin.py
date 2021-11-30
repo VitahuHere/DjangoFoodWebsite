@@ -1,3 +1,5 @@
 from django.contrib import admin
+from API.models import Keys
 
-# Register your models here.
+
+admin.site.register(Keys)
