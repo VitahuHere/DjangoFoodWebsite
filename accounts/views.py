@@ -1,7 +1,7 @@
 import hashlib
 
-from django.shortcuts import render, redirect, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, redirect, HttpResponse
 
 from accounts.models import PersonForm, Person, LoggingForm
 from .forms import RegisterForm, LoginForm
