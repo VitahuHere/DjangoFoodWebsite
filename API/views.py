@@ -1,11 +1,9 @@
-import hashlib
-
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.models import model_to_dict
 from django.http import JsonResponse, HttpResponse
 
 from API.models import Keys
-from accounts.models import Person, PersonForm
+from accounts.models import Person
 from accounts.views import encode_sha256
 
 
@@ -26,23 +24,15 @@ def get_request_api_key(request):
 
 def get_account_data(request):
     try:
-        obj = Person.objects.get(login=request.GET.get('login'))
-        r = model_to_dict(obj)
-        return JsonResponse(r)
-    except ObjectDoesNotExist:
-        return HttpResponse("account does not exist")
-
-
-def post_new_person(request):
-    login = hashlib.sha256(request.POST['login'].encode()).hexdigest()
-    if request.method == 'POST':
-        if Person.objects.filter(pk=login).exists():
-            return HttpResponse("account already exists")
-        p = PersonForm(request.POST)
-        if p.is_valid():
-            new = p.save(commit=False)
-            new.password = hashlib.sha256(request.POST['password'].encode()).hexdigest()
-            new.login = login
-            new.save()
-            p.save_m2m()
-        return HttpResponse(status=204)
+        login = request.GET.get('login')
+        client_id = request.GET.get('client_id')
+        client_secret = request.GET.get('client_secret')
+        if (Keys.objects.get(person=login).client_id == client_id and
+                Keys.objects.get(person=login).client_secret == client_secret):
+            obj = Person.objects.get(login=login)
+            r = model_to_dict(obj)
+            return JsonResponse(r)
+        else:
+            return HttpResponse(status=400)
+    except (ObjectDoesNotExist, KeyError):
+        return JsonResponse("account does not exist")
