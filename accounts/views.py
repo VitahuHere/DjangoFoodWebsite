@@ -1,8 +1,9 @@
 import hashlib
 
 from django.shortcuts import render, redirect, HttpResponse
-from .forms import RegisterForm, LoginForm
+
 from accounts.models import PersonForm, Person, LoggingForm
+from .forms import RegisterForm, LoginForm
 
 
 def register(request):
@@ -14,19 +15,17 @@ def post_register_account(request):
     if request.method == 'POST':
         if Person.objects.filter(pk=login).exists():
             return render(request, 'accounts/redirect existing login.html')
-        else:
-            p = PersonForm(request.POST)
-            if p.is_valid():
-                new = p.save(commit=False)
-                new.password = hashlib.sha256(request.POST['password'].encode()).hexdigest()
-                new.login = login
-                new.save()
-                p.save_m2m()
-                r = redirect('/account/')
-                r.set_cookie('login', login)
-                return r
-            else:
-                return render(request, 'accounts/redirect invalid form.html')
+        p = PersonForm(request.POST)
+        if p.is_valid():
+            new = p.save(commit=False)
+            new.password = hashlib.sha256(request.POST['password'].encode()).hexdigest()
+            new.login = login
+            new.save()
+            p.save_m2m()
+            r = redirect('/account/')
+            r.set_cookie('login', login)
+            return r
+        return render(request, 'accounts/redirect invalid form.html')
 
 
 def logging_in(request):

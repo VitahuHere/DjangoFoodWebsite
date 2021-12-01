@@ -1,1 +1,3 @@
-window.setTimeout(function() {window.location.href = '/login/'}, 3000);
+window.setTimeout(function () {
+    window.location.href = '/login/'
+}, 3000);

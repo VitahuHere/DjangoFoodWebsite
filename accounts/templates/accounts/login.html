@@ -2,16 +2,16 @@
 {% load static %}
 
 {% block header %}
-<link href="{% static 'accounts/register.css' %}" rel="stylesheet">
+    <link href="{% static 'accounts/register.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-<div class="content">
-    <form action="{% url 'post_account_login' %}" method="post"> {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Login">
-    </form>
-</div>
+    <div class="content">
+        <form action="{% url 'post_account_login' %}" method="post"> {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <input type="submit" value="Login">
+        </form>
+    </div>
 {% endblock %}

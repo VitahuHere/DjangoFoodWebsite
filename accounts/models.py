@@ -1,6 +1,6 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.forms import ModelForm
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Person(models.Model):

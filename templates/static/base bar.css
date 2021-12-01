@@ -30,7 +30,7 @@ body {
 }
 
 @media screen and (max-width: 960px) {
-  .navbar a {
-    font-size: 13px;
-  }
+    .navbar a {
+        font-size: 13px;
+    }
 }

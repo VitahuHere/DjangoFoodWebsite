@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+
 from accounts.models import Person
 
 
@@ -20,7 +21,6 @@ class TestResponse(TestCase):
                     }
                    )
         print(r.POST)
-
 
 
 """

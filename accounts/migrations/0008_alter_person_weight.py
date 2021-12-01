@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('accounts', '0007_alter_person_login'),
     ]
@@ -14,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='person',
             name='weight',
-            field=models.DecimalField(decimal_places=1, default=None, max_digits=4, validators=[django.core.validators.MinValueValidator(1)]),
+            field=models.DecimalField(decimal_places=1, default=None, max_digits=4,
+                                      validators=[django.core.validators.MinValueValidator(1)]),
         ),
     ]
