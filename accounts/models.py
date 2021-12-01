@@ -13,12 +13,14 @@ class Person(models.Model):
     height = models.PositiveIntegerField(validators=[MaxValueValidator(999), MinValueValidator(1)], default=None)
 
 
+# form to validate sent form for registration
 class PersonForm(ModelForm):
     class Meta:
         model = Person
         fields = ['login', 'password', 'name', 'surname', 'birthday', 'weight', 'height']
 
 
+# form to validate login form
 class LoggingForm(ModelForm):
     class Meta:
         model = Person

@@ -2,6 +2,7 @@ from django import forms
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
+# register form for template 'register.html'
 class RegisterForm(forms.Form):
     login = forms.CharField(label='Your login:', max_length=100)
     password = forms.CharField(label='Your Password:', max_length=100, widget=forms.PasswordInput())
@@ -12,6 +13,7 @@ class RegisterForm(forms.Form):
     height = forms.IntegerField(label='Your height:', validators=[MinValueValidator(1), MaxValueValidator(999)])
 
 
+# Login form for 'login.html'
 class LoginForm(forms.Form):
     login = forms.CharField(label='Your login:', max_length=100)
     password = forms.CharField(label='Your Password:', max_length=100, widget=forms.PasswordInput())
