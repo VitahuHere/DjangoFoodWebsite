@@ -23,11 +23,11 @@
 <body>
 <div class="navbar" id="navbar">
     <a href="/">Home</a>
-    <a href="/products/">Our products</a>
-    <a href="/contact/">Contact</a>
-    <a href="/about/">About Me</a>
-    <a href="/login/" style="float: right">Login</a>
-    <a href="/register/" style="float: right">Register</a>
+    <a href="{% url 'products' %}">Our products</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'about' %}">About Me</a>
+    <a href="{% url 'login' %}" style="float: right">Login</a>
+    <a href="{% url 'register' %}" style="float: right">Register</a>
 </div>
 {% block content %}
 {% endblock %}

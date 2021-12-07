@@ -1,3 +1,6 @@
+import random
+import string
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.models import model_to_dict
 from django.http import JsonResponse, HttpResponse
@@ -7,18 +10,25 @@ from accounts.models import Person
 from accounts.views import encrypt_sha256
 
 
-def generate_api_keys(who: str):
+def generate_api_keys(client: str):
     """
-    Method generating api keys returning JsonResponse dictionary of Keys objects
-    :param who:
+    Method generating api keys returning dictionary of Keys
+    'person': 'example',
+    'client_id': 'client id',
+    'client_secret': 'client secret'
+    :param client:
     :return:
     """
-    client = encrypt_sha256(who)
     try:
-        return JsonResponse(model_to_dict(Keys.objects.get(client_id=client)))
+        return model_to_dict(Keys.objects.get(person_id=client))
     except ObjectDoesNotExist:
-        Keys.objects.create(client_id=client, client_secret=encrypt_sha256(client), person_id=who)
-        return JsonResponse(model_to_dict(Keys.objects.get(client_id=client)))
+        letters = string.ascii_lowercase
+        Keys.objects.create(
+            person_id=client,
+            client_id=encrypt_sha256(''.join(random.choice(letters) for _ in range(10))),
+            client_secret=encrypt_sha256(client + ''.join(random.choice(letters) for _ in range(10))),
+        )
+        return model_to_dict(Keys.objects.get(person_id=client))
 
 
 def get_request_api_key(request):
@@ -28,14 +38,17 @@ def get_request_api_key(request):
     :param request:
     :return:
     """
-    login = request.GET.get('login')
-    response = generate_api_keys(login)
-    return HttpResponse(response)
+    try:
+        login = request.GET.get('login')
+        response = generate_api_keys(login)
+        return JsonResponse(response)
+    except KeyError:
+        return HttpResponse(status=400)
 
 
 def get_account_data(request):
     """
-    End point to return json dictionary with account information including
+    Endpoint to return json dictionary with account information including
     Encrypted login and password
     Else return status 400
     :param request:
@@ -51,6 +64,6 @@ def get_account_data(request):
             r = model_to_dict(obj)
             return JsonResponse(r)
         else:
-            return HttpResponse(status=400)
+            return HttpResponse(status=401)
     except (ObjectDoesNotExist, KeyError):
         return JsonResponse("account does not exist")

@@ -1,0 +1,26 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'recipes styling.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <span>{% block title %} {% endblock %}</span><br>
+        <span>Ingredients</span>
+        <ul>
+            {% block ingredients %}
+            {% endblock %}
+        </ul>
+        <span>Directions</span>
+        <ul>
+            {% block directions %}
+            {% endblock %}
+        </ul>
+        <span>{% block ending %}{% endblock %}</span>
+        <a href="{% url 'account' %}">
+          <input type="submit" value="Order ingredients"/>
+        </a>
+    </div>
+{% endblock %}

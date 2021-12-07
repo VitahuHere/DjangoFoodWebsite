@@ -1,0 +1,33 @@
+span{
+    font-size: 30px;
+    padding: 10px;
+    color: crimson;
+}
+
+.listing {
+    padding: 10px;
+}
+
+.listing span{
+    color: black;
+    font-size: 30px;
+}
+
+.listing li{
+    font-size: 20px;
+}
+
+.doc {
+    padding: 10px;
+}
+
+.doc span{
+    padding: 5px;
+    font-size: 25px;
+    color: #13CF19;
+}
+
+.doc li{
+    padding: 2px;
+    font-size: 20px;
+}

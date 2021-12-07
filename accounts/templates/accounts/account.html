@@ -1,0 +1,35 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/account.css' %}">
+{% endblock %}
+
+{% block content %}
+    <span>History of packages</span>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Address</th>
+            <th>Title</th>
+            <th>Contents</th>
+        </tr>
+        {% for package in packages %}
+            <tr>
+                <td>{{ client.name }}</td>
+                <td>{{ client.surname }}</td>
+                <td>{{ package.address }}</td>
+                <td>{{ package.title }}</td>
+                <td>
+                    {% for content in package.contents %}
+                        {{ content }},
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'account' %}">
+          <input type="submit" value="Order products"/>
+    </a>
+{% endblock %}

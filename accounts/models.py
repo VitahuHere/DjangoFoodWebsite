@@ -9,19 +9,22 @@ class Person(models.Model):
     name = models.CharField(max_length=100, default=None)
     surname = models.CharField(max_length=100, default=None)
     birthday = models.DateField(blank=True, null=True)
-    weight = models.DecimalField(max_digits=4, decimal_places=1, validators=[MinValueValidator(1)], default=None)
-    height = models.PositiveIntegerField(validators=[MaxValueValidator(999), MinValueValidator(1)], default=None)
+    address = models.CharField(blank=False, max_length=100, null=True)
 
 
-# form to validate sent form for registration
 class PersonForm(ModelForm):
+    """
+    Form to validate sent form for registration
+    """
     class Meta:
         model = Person
-        fields = ['login', 'password', 'name', 'surname', 'birthday', 'weight', 'height']
+        fields = ['login', 'password', 'name', 'surname', 'birthday']
 
 
-# form to validate login form
 class LoggingForm(ModelForm):
+    """
+    Form to validate login form
+    """
     class Meta:
         model = Person
         fields = ['login', 'password']

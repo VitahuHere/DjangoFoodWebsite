@@ -1,0 +1,27 @@
+.grid {
+    display: grid;
+    margin-left: 20px;
+}
+
+.grid span {
+    font-size: 30px;
+    padding: 5px;
+}
+
+li{
+    padding: 5px;
+}
+
+html{
+    margin-bottom: 20px;
+}
+
+input[type=submit] {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    margin: 25px;
+    padding: 10px;
+    background-color: #ff9800;
+    border-color: #ff9100;
+    border-radius: 4px;
+}

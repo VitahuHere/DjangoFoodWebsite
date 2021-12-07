@@ -1,0 +1,27 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'packages/products.css' %}">
+{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Net weight</th>
+            <th>Allergens</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.net_weight }}g</td>
+                <td>
+                    {% for allergy in product.allergens %}
+                        {{ allergy }},
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

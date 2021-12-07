@@ -1,0 +1,23 @@
+table {
+    width: 50%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+span{
+    padding: 10px;
+    font-size: 30px;
+}
+
+input[type=submit] {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    margin: 25px;
+    padding: 10px;
+    background-color: #ff9800;
+    border-color: #ff9100;
+    border-radius: 4px;
+}

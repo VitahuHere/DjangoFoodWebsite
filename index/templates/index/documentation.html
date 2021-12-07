@@ -1,0 +1,131 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/documentation.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="segment">
+        <span style="font-size: 20px">Welcome to documentation for this site. For any questions, email me at marcinvitahkanada@gmail.com</span>
+    </div>
+    <div class="listing">
+        <span>Accounts</span>
+        <ul>
+            <li><a href="#accounts_models">Models</a></li>
+            <li><a href="#accounts_urls">Urls</a></li>
+            <li><a href="#accounts_views">Views</a></li>
+            <li><a href="#accounts_forms">Forms</a></li>
+            <li><a href="#accounts_templates">Templates</a></li>
+        </ul>
+    </div>
+    <div class="listing">
+        <span>API</span>
+        <ul>
+            <li>Models</li>
+            <li>Endpoints</li>
+            <li>Views</li>
+        </ul>
+    </div>
+    <div class="listing">
+        <span>Index</span>
+        <ul>
+            <li>Urls</li>
+            <li>Views</li>
+            <li>Templates</li>
+        </ul>
+    </div>
+    <div class="listing">
+        <span>Packages</span>
+        <ul>
+            <li>Models</li>
+            <li>Urls</li>
+            <li>Views</li>
+            <li>Templates</li>
+        </ul>
+    </div>
+    <div class="listing">
+        <span>Recipes</span>
+        <ul>
+            <li>Models</li>
+            <li>Urls</li>
+            <li>Views</li>
+            <li>Templates</li>
+        </ul>
+    </div>
+
+    <span>Accounts</span>
+    <div class="doc">
+        <span id="accounts_models">Models</span>
+        <ul>
+            <li>
+                Model called "Person" with fields:
+                <ul>
+                    <li>login -> character field as primary key with max length of 100</li>
+                    <li>password -> character field with max length of 200</li>
+                    <li>name -> character field with max length of 100</li>
+                    <li>surname -> character field with max length of 100</li>
+                    <li>birthday -> date field with null=True and blank=True</li>
+                    <li>address -> character field with max length of 100 and null=True and blank=True</li>
+                </ul>
+                Stores users data and uses 'register' view to create new record in the database
+            </li>
+            <li>
+                'PersonForm' is a model form for validating sent data via 'RegisterForm'. Uses only:
+                <ul>
+                    <li>login</li>
+                    <li>password</li>
+                    <li>name</li>
+                    <li>surname</li>
+                    <li>birthday</li>
+                </ul>
+            </li>
+            <li>
+                'LoggingForm' is a model from for validating sent data via 'LoginForm'. Uses only:
+                <ul>
+                    <li>login</li>
+                    <li>password</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="doc">
+        <span id="accounts_urls">Urls</span>
+        <ul>
+            <li>/account/ after successful login or registration sets cookie 'login' to encrypted sha256 login and renders 'account.html'</li>
+            <li>/login/ for rendering 'LoginForm' in 'login.html'</li>
+            <li>/post/login/data/ it's only for 'LoginForm' to send the data to 'post_account_login()' for parsing. Only redirects or renders redirecting pages</li>
+            <li>/post/register/data/ it's only for 'RegisterForm' to send the data to 'post_register_account()' for parsing. Only redirects or renders redirecting pages</li>
+            <li>/register/ for rendering 'RegisterForm' in 'register.html'</li>
+        </ul>
+    </div>
+    <div class="doc">
+        <span id="accounts_views">Views</span>
+        <ul>
+            <li>
+                account(request)
+                <ul>
+                    <li>
+                        Checks whether the is 'login' cookie. If not, redirects to login page. If successful,
+                        renders 'account.html' and queries database to fetch history of previous packages.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                logging_in(request)
+                <ul>
+
+                </ul>
+            </li>
+            <li>post_account_login(request)</li>
+            <li>post_register_account(request)</li>
+            <li>register(request)</li>
+        </ul>
+    </div>
+    <div class="doc">
+        <span id="accounts_forms">Forms</span>
+    </div>
+    <div class="doc">
+        <span id="accounts_templates">Templates</span>
+    </div>
+{% endblock %}

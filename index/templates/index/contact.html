@@ -1,0 +1,14 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'index/contact.css' %}" >
+{% endblock %}
+
+{% block content %}
+    <div class="grid">
+        <span>Made with Django, PostgreSQL, basic HTML5 and CSS</span><br>
+        <span>Any advice or bugs please send to marcinvitahkanada@gmail.com</span><br>
+        <span>Source Code available on <a href="https://github.com/VitahuHere/business">GitHub</a></span>
+    </div>
+{% endblock %}
