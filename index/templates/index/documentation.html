@@ -58,7 +58,7 @@
     <div class="doc">
         <span id="accounts_models">Models</span>
         <ul>
-            <li>
+            <li id="accounts_models_Person">
                 Model called "Person" with fields:
                 <ul>
                     <li>login -> character field as primary key with max length of 100</li>
@@ -68,10 +68,11 @@
                     <li>birthday -> date field with null=True and blank=True</li>
                     <li>address -> character field with max length of 100 and null=True and blank=True</li>
                 </ul>
-                Stores users data and uses 'register' view to create new record in the database
+                Stores users data and uses <a href="#accounts_views_register">'register'</a>
+                view to create new record in the database
             </li>
-            <li>
-                'PersonForm' is a model form for validating sent data via 'RegisterForm'. Uses only:
+            <li id="accounts_models_PersonForm">
+                'PersonForm' is a model form for validating sent data via <a href="#accounts_RegisterForm">'RegisterForm'</a>. Uses only:
                 <ul>
                     <li>login</li>
                     <li>password</li>
@@ -80,8 +81,8 @@
                     <li>birthday</li>
                 </ul>
             </li>
-            <li>
-                'LoggingForm' is a model from for validating sent data via 'LoginForm'. Uses only:
+            <li id="accounts_models_LoggingForm">
+                'LoggingForm' is a model from for validating sent data via <a href="#accounts_LoginForm">'LoginForm'</a>. Uses only:
                 <ul>
                     <li>login</li>
                     <li>password</li>
@@ -92,17 +93,23 @@
     <div class="doc">
         <span id="accounts_urls">Urls</span>
         <ul>
-            <li>/account/ after successful login or registration sets cookie 'login' to encrypted sha256 login and renders 'account.html'</li>
-            <li>/login/ for rendering 'LoginForm' in 'login.html'</li>
-            <li>/post/login/data/ it's only for 'LoginForm' to send the data to 'post_account_login()' for parsing. Only redirects or renders redirecting pages</li>
-            <li>/post/register/data/ it's only for 'RegisterForm' to send the data to 'post_register_account()' for parsing. Only redirects or renders redirecting pages</li>
-            <li>/register/ for rendering 'RegisterForm' in 'register.html'</li>
+            <li id="accounts_urls_account">/account/ after successful login or registration sets cookie 'login' to encrypted sha256 login and
+                renders <a href="#accounts_templates_account">'account.html'</a>
+            </li>
+            <li id="accounts_urls_login">/login/ for rendering <a href="#accounts_LoginForm">'LoginForm'</a> in <a href="#accounts_templates_login">'login.html'</a></li>
+            <li id="accounts_urls_post_login_data">/post/login/data/ it's only for <a href="#accounts_LoginForm">'LoginForm'</a> to send the data to <a href="#accounts_views_post_account_login">'post_account_login()'</a>for parsing. Only
+                redirects or renders redirecting pages
+            </li>
+            <li id="accounts_urls_post_register_data">/post/register/data/ it's only for <a href="#accounts_RegisterForm">'RegisterForm'</a> to send the data to <a href="#accounts_views_post_register_account">'post_register_account()'</a> for
+                parsing. Only redirects or renders redirecting pages
+            </li>
+            <li id="accounts_urls_register">/register/ for rendering <a href="#accounts_RegisterForm">'RegisterForm'</a> in 'register.html'</li>
         </ul>
     </div>
     <div class="doc">
         <span id="accounts_views">Views</span>
         <ul>
-            <li>
+            <li id="accounts_views_account">
                 account(request)
                 <ul>
                     <li>
@@ -111,21 +118,109 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <li id="accounts_views_logging_in">
                 logging_in(request)
                 <ul>
-
+                    <li>If cookie 'login' is set and exists in DB, redirects to 'account' view. Otherwise, renders
+                        'login.html' with <a href="#accounts_LoginForm">'LoginForm'</a>
+                    </li>
                 </ul>
             </li>
-            <li>post_account_login(request)</li>
-            <li>post_register_account(request)</li>
-            <li>register(request)</li>
+            <li id="accounts_views_post_account_login">
+                post_account_login(request)
+                <ul>
+                    <li>Checks if <a href="#accounts_LoginForm">'LoginForm'</a> is valid, then encrypts the login with sha256.
+                        Checks if encrypted is present in the DB. If yes, sets cookie 'login' set to encrypted 'login',
+                        then redirects to 'account' view. Otherwise, renders 'redirect invalid form.html' or
+                        'account not existing.html' accordingly
+                    </li>
+                </ul>
+            </li>
+            <li id="accounts_views_post_register_account">
+                post_register_account(request)
+                <ul>
+                    <li>
+                        Very important. Takes form data from 'RegisterForm' and evaluates it. If it fits, encrypts
+                        password and login with sha256 and save to DB.
+                    </li>
+                </ul>
+            </li>
+            <li id="accounts_views_register">
+                register(request)
+                <ul>
+                    <li>Renders 'register.html' with 'RegisterForm'</li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="doc">
         <span id="accounts_forms">Forms</span>
+        <ul>
+            <li id="accounts_LoginForm">
+                LoginForm
+                <ul>
+                    <li>
+                        Used in 'login.html' for rendering and evaluating data.
+                        Uses login and password character fields (max length 100).
+                    </li>
+                </ul>
+            </li>
+            <li id="accounts_RegisterForm">
+                RegisterForm
+                <ul>
+                    <li>
+                        Used in 'register.html' for rendering and evaluating data.
+                        Uses login, password, name, surname character fields (max length 100) and birthday date field
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
     <div class="doc">
         <span id="accounts_templates">Templates</span>
+        <ul>
+            <li id="accounts_templates_account">
+                account.html
+                <ul>
+                    <li>
+                        Renders main page for account. Queries for last sent packages. Allows for ordering new.
+                    </li>
+                </ul>
+            </li>
+            <li id="accounts_templates_account_not_existing">
+                account not existing.html
+                <ul>
+                    <li>
+                        Renders for 3 seconds page informing account doesn't exist. Redirects to 'login/'
+                    </li>
+                </ul>
+            </li>
+            <li id="accounts_templates_login">
+                login.html
+                <ul>
+                    <li>
+                        Template rendering <a href="#accounts_LoginForm">'LoginForm'</a>
+                    </li>
+                </ul>
+            </li>
+            <li id="accounts_templates_redirect_existing_login">
+                redirect existing login.html
+                <ul>
+                    <li>Renders for 3 seconds page informing login already exists. Redirects to 'register/'</li>
+                </ul>
+            </li>
+            <li id="accounts_templates_redirect_invalid_form">
+                redirect invalid form.html
+                <ul>
+                    <li>Renders for 3 seconds page informing invalid data was given. Redirects to 'register/'</li>
+                </ul>
+            </li>
+            <li id="accounts_templates_register">
+                register.html
+                <ul>
+                    <li>Renders with 'RegisterForm'</li>
+                </ul>
+            </li>
+        </ul>
     </div>
 {% endblock %}

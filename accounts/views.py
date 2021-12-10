@@ -56,7 +56,7 @@ def post_account_login(request):
     View for checking login request
     Try except catches KeyError if the is no 'login' key
     If login is successful, cookie 'login' set to encrypted 'login'
-    Then redirected to 'account/'
+    Then redirects to 'account/'
     :param request:
     :return:
     """
