@@ -254,7 +254,7 @@
         <div class="doc">
             <span id="api_models">Models</span>
             <ul>
-                <li>
+                <li id="api_models_keys">
                     Keys
                     <ul>
                         <li>person -> One to one field</li>
@@ -266,13 +266,13 @@
             </ul>
             <span id="api_endpoints">Endpoints</span>
             <ul>
-                <li>
+                <li id="api_endpoints_get_account_data">
                     api/get/account/data/
                     <ul>
                         <li>Uses <a href="#api_views_get_account_data">'get_account_data'</a></li>
                     </ul>
                 </li>
-                <li>
+                <li id="api_endpoints_get_request_api_key">
                     api/get/request_api_key/
                     <ul>
                         <li>Uses <a href="#api_views_get_request_api_key">'get_request_api_key'</a></li>
@@ -301,7 +301,7 @@
                         <li>No values are required</li>
                     </ul>
                 </li>
-                <li>
+                <li id="api_views_generate_api_keys">
                     generate_api_keys(client: str)
                     <ul>
                         <li>
@@ -320,12 +320,74 @@
         <div class="doc">
             <span id="index_urls">Urls</span>
             <ul>
-
+                <li id="index_urls_empty">
+                    empty
+                    <ul>
+                        <li>Main page of the website - renders <a href="#index_templates_index">'index.html'</a></li>
+                    </ul>
+                </li>
+                <li id="index_urls_about">
+                    about/
+                    <ul>
+                        <li>Page about me, my experience and overall CV stuff. Renders <a href="#index_templates_about">'about.html'</a></li>
+                    </ul>
+                </li>
+                <li id="index_urls_contact">
+                    contact/
+                    <ul>
+                        <li>Page mainly for listing contact details, renders <a href="#index_templates_contact">'contact.html'</a></li>
+                    </ul>
+                </li>
+                <li id="index_urls_documentation">
+                    documentation/
+                    <ul>
+                        <li>
+                            Page for all the documentation about this website. It's what you're looking at right now.
+                            Renders <a href="#index_templates_documentation">'documentation.html'</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <span id="index_views">Views</span>
+            <ul>
+                <li id="index_views_about">
+                    about(request)
+                    <ul>
+                        <li>renders <a href="#index_templates_about">'about.html'</a></li>
+                    </ul>
+                </li>
+                <li id="index_views_contact">
+                    contact(request)
+                    <ul>
+                        <li>
+                            Renders <a href="#index_templates_contact">'contact.html'</a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="index_views_documentation">
+                    documentation(request)
+                    <ul>
+                        <li>
+                            Renders <a href="#index_templates_documentation">'documentation.html'</a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="index_views_index">
+                    index(request)
+                    <ul>
+                        <li>
+                            Renders <a href="#index_templates_index">'index.html'</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
             <span id="index_templates">Templates</span>
-
+            <ul>
+                <li id="index_templates_about">about.html</li>
+                <li id="index_templates_contact">contact.html</li>
+                <li id="index_templates_documentation">documentation.html</li>
+                <li id="index_templates_index">index.html</li>
+            </ul>
         </div>
-
     </div>
 {% endblock %}
