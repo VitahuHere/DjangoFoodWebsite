@@ -10,6 +10,29 @@ from accounts.models import Person
 from accounts.views import encrypt_sha256
 
 
+def get_account_data(request):
+    """
+    Endpoint to return json dictionary with account information including
+    Encrypted login and password
+    Else return status 400
+    :param request:
+    :return:
+    """
+    try:
+        login = request.GET.get('login')
+        client_id = request.GET.get('client_id')
+        client_secret = request.GET.get('client_secret')
+        if (Keys.objects.get(person=login).client_id == client_id and
+                Keys.objects.get(person=login).client_secret == client_secret):
+            obj = Person.objects.get(login=login)
+            r = model_to_dict(obj)
+            return JsonResponse(r)
+        else:
+            return HttpResponse(status=401)
+    except (ObjectDoesNotExist, KeyError):
+        return JsonResponse("Invalid Keys or client does not exist")
+
+
 def generate_api_keys(client: str):
     """
     Method generating api keys returning dictionary of Keys
@@ -44,26 +67,3 @@ def get_request_api_key(request):
         return JsonResponse(response)
     except KeyError:
         return HttpResponse(status=400)
-
-
-def get_account_data(request):
-    """
-    Endpoint to return json dictionary with account information including
-    Encrypted login and password
-    Else return status 400
-    :param request:
-    :return:
-    """
-    try:
-        login = request.GET.get('login')
-        client_id = request.GET.get('client_id')
-        client_secret = request.GET.get('client_secret')
-        if (Keys.objects.get(person=login).client_id == client_id and
-                Keys.objects.get(person=login).client_secret == client_secret):
-            obj = Person.objects.get(login=login)
-            r = model_to_dict(obj)
-            return JsonResponse(r)
-        else:
-            return HttpResponse(status=401)
-    except (ObjectDoesNotExist, KeyError):
-        return JsonResponse("account does not exist")
