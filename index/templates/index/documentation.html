@@ -30,9 +30,9 @@
     <div class="listing">
         <span>Index</span>
         <ul>
-            <li>Urls</li>
-            <li>Views</li>
-            <li>Templates</li>
+            <li><a href="#index_urls">Urls</a></li>
+            <li><a href="#index_views">Views</a></li>
+            <li><a href="#index_templates">Templates</a></li>
         </ul>
     </div>
     <div class="listing">
@@ -53,6 +53,8 @@
             <li>Templates</li>
         </ul>
     </div>
+
+
     <div>
         <span>Accounts</span>
         <div class="doc">
@@ -249,6 +251,8 @@
             </ul>
         </div>
     </div>
+
+
     <div>
         <span>API</span>
         <div class="doc">
@@ -264,6 +268,8 @@
                     Stores API keys and keeps track of whom it belongs to. Enables access to personal data.
                 </li>
             </ul>
+        </div>
+        <div class="doc">
             <span id="api_endpoints">Endpoints</span>
             <ul>
                 <li id="api_endpoints_get_account_data">
@@ -279,6 +285,8 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+        <div class="doc">
             <span id="api_views">Views</span>
             <ul>
                 <li id="api_views_get_account_data">
@@ -315,6 +323,8 @@
             </ul>
         </div>
     </div>
+
+
     <div>
         <span>Index</span>
         <div class="doc">
@@ -323,31 +333,32 @@
                 <li id="index_urls_empty">
                     empty
                     <ul>
-                        <li>Main page of the website - renders <a href="#index_templates_index">'index.html'</a></li>
+                        <li>Renders <a href="#index_templates_index">'index.html'</a></li>
                     </ul>
                 </li>
                 <li id="index_urls_about">
                     about/
                     <ul>
-                        <li>Page about me, my experience and overall CV stuff. Renders <a href="#index_templates_about">'about.html'</a></li>
+                        <li>Renders <a href="#index_templates_about">'about.html'</a></li>
                     </ul>
                 </li>
                 <li id="index_urls_contact">
                     contact/
                     <ul>
-                        <li>Page mainly for listing contact details, renders <a href="#index_templates_contact">'contact.html'</a></li>
+                        <li>Renders <a href="#index_templates_contact">'contact.html'</a></li>
                     </ul>
                 </li>
                 <li id="index_urls_documentation">
                     documentation/
                     <ul>
                         <li>
-                            Page for all the documentation about this website. It's what you're looking at right now.
                             Renders <a href="#index_templates_documentation">'documentation.html'</a>
                         </li>
                     </ul>
                 </li>
             </ul>
+        </div>
+        <div class="doc">
             <span id="index_views">Views</span>
             <ul>
                 <li id="index_views_about">
@@ -381,13 +392,50 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+        <div class="doc">
             <span id="index_templates">Templates</span>
             <ul>
-                <li id="index_templates_about">about.html</li>
-                <li id="index_templates_contact">contact.html</li>
-                <li id="index_templates_documentation">documentation.html</li>
-                <li id="index_templates_index">index.html</li>
+                <li id="index_templates_about">
+                    about.html
+                    <ul>
+                        <li>Page about me, my experience and overall CV stuff.</li>
+                    </ul>
+                </li>
+                <li id="index_templates_contact">
+                    contact.html
+                    <ul>
+                        <li>Page mainly for listing contact details.</li>
+                    </ul>
+                </li>
+                <li id="index_templates_documentation">
+                    documentation.html
+                    <ul>
+                        <li>Page for all the documentation about this website. It's what you're looking at right now.</li>
+                    </ul>
+                </li>
+                <li id="index_templates_index">
+                    index.html
+                    <ul>
+                        <li>Main page of the website</li>
+                    </ul>
+                </li>
             </ul>
+        </div>
+    </div>
+    <div>
+        <span>Packages</span>
+        <div class="doc">
+            <span id="packages_models">Models</span>
+        </div>
+        <div class="doc">
+            <span id="packages_urls">Urls</span>
+        </div>
+        <div class="doc">
+            <span id="packages_views">Views</span>
+        </div>
+        <div class="doc">
+            <span id="packages_templates">Templates</span>
         </div>
     </div>
 {% endblock %}
