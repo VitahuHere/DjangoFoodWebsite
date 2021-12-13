@@ -38,19 +38,18 @@
     <div class="listing">
         <span>Packages</span>
         <ul>
-            <li>Models</li>
-            <li>Urls</li>
-            <li>Views</li>
-            <li>Templates</li>
+            <li><a href="#packages_models">Models</a></li>
+            <li><a href="#packages_urls">Urls</a></li>
+            <li><a href="#packages_views">Views</a></li>
+            <li><a href="#packages_templates">Templates</a></li>
         </ul>
     </div>
     <div class="listing">
         <span>Recipes</span>
         <ul>
-            <li>Models</li>
-            <li>Urls</li>
-            <li>Views</li>
-            <li>Templates</li>
+            <li><a href="#recipes_urls">Urls</a></li>
+            <li><a href="#recipes_views">Views</a></li>
+            <li><a href="#recipes_templates">Templates</a></li>
         </ul>
     </div>
 
@@ -61,7 +60,7 @@
             <span id="accounts_models">Models</span>
             <ul>
                 <li id="accounts_models_Person">
-                    Model called "Person" with fields:
+                    Model 'Person':
                     <ul>
                         <li>login -> character field as primary key with max length of 100</li>
                         <li>password -> character field with max length of 200</li>
@@ -333,26 +332,26 @@
                 <li id="index_urls_empty">
                     empty
                     <ul>
-                        <li>Renders <a href="#index_templates_index">'index.html'</a></li>
+                        <li>Uses <a href="#index_views_index">'index'</a> view</li>
                     </ul>
                 </li>
                 <li id="index_urls_about">
                     about/
                     <ul>
-                        <li>Renders <a href="#index_templates_about">'about.html'</a></li>
+                        <li>Uses <a href="#index_views_about">'about'</a> view</li>
                     </ul>
                 </li>
                 <li id="index_urls_contact">
                     contact/
                     <ul>
-                        <li>Renders <a href="#index_templates_contact">'contact.html'</a></li>
+                        <li>Uses <a href="#index_views_contact">'contact'</a> view</li>
                     </ul>
                 </li>
                 <li id="index_urls_documentation">
                     documentation/
                     <ul>
                         <li>
-                            Renders <a href="#index_templates_documentation">'documentation.html'</a>
+                            Uses <a href="#index_views_documentation">'documentation'</a> view
                         </li>
                     </ul>
                 </li>
@@ -364,7 +363,7 @@
                 <li id="index_views_about">
                     about(request)
                     <ul>
-                        <li>renders <a href="#index_templates_about">'about.html'</a></li>
+                        <li>Renders <a href="#index_templates_about">'about.html'</a></li>
                     </ul>
                 </li>
                 <li id="index_views_contact">
@@ -427,15 +426,115 @@
         <span>Packages</span>
         <div class="doc">
             <span id="packages_models">Models</span>
+            <ul>
+                <li id="packages_models_package">
+                    Model 'Package'
+                    <ul>
+                        <li>client -> Foreign Key to Person</li>
+                        <li>address -> Character field of max length 100</li>
+                        <li>title -> Character filed of max length 100 and null=True</li>
+                        <li>contents -> Array Field of Character fields of max length 100</li>
+                    </ul>
+                    Stores data about packages, to whom it belongs to and what it contains. Optional title for easier finding
+                </li>
+                <li id="packages_models_products">
+                    Model 'Products'
+                    <ul>
+                        <li>name -> Character field max length 100 as primary key</li>
+                        <li>amount -> Integer field with minimum validator of 0</li>
+                        <li>net_weight -> Floating point field with minimum validator of 0</li>
+                        <li>allergens -> Array field of Character fields of max length 100</li>
+                    </ul>
+                    Stores data about available products to order outside packages and shows in <a href="#packages_templates_products">'products.html'</a>
+                </li>
+            </ul>
         </div>
         <div class="doc">
             <span id="packages_urls">Urls</span>
+            <ul>
+                <li id="packages_urls_products">
+                    products/
+                    <ul>
+                        <li>Uses <a href="#packages_views_products">'products'</a> view</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
         <div class="doc">
             <span id="packages_views">Views</span>
+            <ul>
+                <li id="packages_views_products">
+                    products(request)
+                    <ul>
+                        <li>Renders <a href="#packages_templates_products">'products.html'</a> with queried products from DB</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
         <div class="doc">
             <span id="packages_templates">Templates</span>
+            <ul>
+                <li id="packages_templates_products">
+                    products.html
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        <span>Recipes</span>
+        <div class="doc">
+            <span id="recipes_urls">Urls</span>
+            <ul>
+                <li id="recipes_urls_spaghetti_al_pomodoro">
+                    spaghetti_al_pomodoro/
+                    <ul>
+                        <li>Uses <a href="#recipes_views_spaghetti_al_pomodoro">'spaghetti_al_pomodoro'</a> view</li>
+                    </ul>
+                </li>
+                <li id="recipes_urls_pancakes">
+                    pancakes/
+                    <ul>
+                        <li>Uses <a href="#recipes_views_pancakes">'pancakes'</a> view</li>
+                    </ul>
+                </li>
+                <li id="recipes_urls_porkchop">
+                    porkchop/
+                    <ul>
+                        <li>Uses <a href="#recipes_views_porkchop">'porkchop'</a> view</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="doc">
+            <span id="recipes_views">Views</span>
+            <ul>
+                <li id="recipes_views_spaghetti_al_pomodoro">
+                    spaghetti_al_pomodoro(request)
+                    <ul>
+                        <li>Renders <a href="#recipes_templates_spaghetti_al_pomodoro">'spaghetti al pomodoro.html'</a></li>
+                    </ul>
+                </li>
+                <li id="recipes_views_pancakes">
+                    pancakes(request)
+                    <ul>
+                        <li>Renders <a href="#recipes_templates_pancakes">'pancakes.html'</a></li>
+                    </ul>
+                </li>
+                <li id="recipes_views_porkchop">
+                    pork_chop(request)
+                    <ul>
+                        <li>Renders <a href="#recipes_templates_porkchop">'porkchop.html'</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="doc">
+            <span id="recipes_templates">Templates</span>
+            <ul>
+                <li id="recipes_templates_pancakes">pancakes.html</li>
+                <li id="recipes_templates_porkchop">porkchop.html</li>
+                <li id="recipes_templates_spaghetti_al_pomodoro">spaghetti al pomodoro.html</li>
+            </ul>
         </div>
     </div>
 {% endblock %}
