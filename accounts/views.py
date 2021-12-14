@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from accounts.models import PersonForm, Person, LoggingForm
 from .forms import RegisterForm, LoginForm
-from packages.models import Package
+from packages.models import Package, Products
 
 
 def account(request):
@@ -49,6 +49,13 @@ def logging_in(request):
         return redirect('/account/')
     except (KeyError, ObjectDoesNotExist):
         return render(request, 'accounts/login.html', {'form': LoginForm})
+
+
+def order(request):
+    context = {
+        'products': Products.objects.all()
+    }
+    return render(request, 'accounts/order.html', context)
 
 
 def post_account_login(request):

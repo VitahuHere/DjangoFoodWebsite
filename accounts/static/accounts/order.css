@@ -1,0 +1,22 @@
+table {
+    width: 75%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #ffc0a4;
+}
+
+input[type=submit] {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    margin: 25px;
+    padding: 10px;
+    background-color: #ff9800;
+    border-color: #ff9100;
+    border-radius: 4px;
+}

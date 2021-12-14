@@ -1,0 +1,30 @@
+{% extends 'base bar.html' %}
+{% load static %}
+
+{% block header %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/order.css' %}">
+{% endblock %}
+
+{% block content %}
+    <form>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Add to cart</th>
+            </tr>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>
+                        <input type="checkbox" name="selected" value="{{ product.name }}">
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <a href="{% url 'account' %}">
+            <input type="submit" value="Order products"/>
+        </a>
+    </form>
+
+
+{% endblock %}
