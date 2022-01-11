@@ -51,13 +51,6 @@ def logging_in(request):
         return render(request, 'accounts/login.html', {'form': LoginForm})
 
 
-def order(request):
-    context = {
-        'products': Products.objects.all()
-    }
-    return render(request, 'accounts/order.html', context)
-
-
 def post_account_login(request):
     """
     View for checking login request

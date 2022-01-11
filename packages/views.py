@@ -8,3 +8,9 @@ def products(request):
     }
     return render(request, 'packages/products.html', context)
 
+
+def order(request):
+    context = {
+        'products': Products.objects.all()
+    }
+    return render(request, 'packages/order.html', context)
