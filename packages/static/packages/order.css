@@ -1,5 +1,7 @@
 table {
-    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
 }
 
 td, th {
@@ -8,10 +10,16 @@ td, th {
 }
 
 tr:nth-child(even) {
-  background-color: #ffc0a4;
+    background-color: #ffc0a4;
 }
 
-input[type=submit] {
+
+
+.center{
+    text-align: center;
+}
+
+.center input {
     font-family: 'Ubuntu', sans-serif;
     font-size: 20px;
     margin: 25px;

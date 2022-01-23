@@ -15,10 +15,11 @@ class Package(models.Model):
     )
 
 
-class Products(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=100, primary_key=True)
     amount = models.IntegerField(validators=[MinValueValidator(0)])
     net_weight = models.FloatField(validators=[MinValueValidator(0)])
+    is_liquid = models.BooleanField(default=False)
     allergens = ArrayField(
         models.CharField(max_length=100, blank=True),
         blank=True,

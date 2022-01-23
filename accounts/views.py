@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from accounts.models import PersonForm, Person, LoggingForm
 from .forms import RegisterForm, LoginForm
-from packages.models import Package, Products
+from packages.models import Package, Product
 
 
 def account(request):

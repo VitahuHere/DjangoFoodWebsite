@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block header %}
-    <link rel="stylesheet" type="text/css" href="{% static 'packages/products.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'packages/order.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,13 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.name }}</td>
-                <td>{{ product.net_weight }}g</td>
+                <td>{{ product.net_weight }}
+                    {% if product.is_liquid %}
+                        ml
+                        {% else %}
+                        g
+                    {% endif %}
+                </td>
                 <td>
                     {% for allergy in product.allergens %}
                         {{ allergy }},

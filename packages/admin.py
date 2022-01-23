@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Package, Products
+from .models import Package, Product
 from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 
 
@@ -8,6 +8,6 @@ class PackageAdmin(admin.ModelAdmin, DynamicArrayMixin):
     ...
 
 
-@admin.register(Products)
+@admin.register(Product)
 class ProductsAdmin(admin.ModelAdmin, DynamicArrayMixin):
     ...

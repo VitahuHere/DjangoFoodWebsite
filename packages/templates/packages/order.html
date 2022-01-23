@@ -10,21 +10,41 @@
         <table>
             <tr>
                 <th>Product</th>
-                <th>Add to cart</th>
+                <th>Net weight</th>
+                <th>Amount Available</th>
+                <th>Allergens</th>
+                <th>Add to cart amount</th>
             </tr>
             {% for product in products %}
                 <tr>
                     <td>{{ product.name }}</td>
+                    <td>{{ product.net_weight }}
+                        {% if product.is_liquid %}
+                            ml
+                        {% else %}
+                            g
+                        {% endif %}
+                    </td>
+                    <td>{{ product.amount }}</td>
                     <td>
-                        <input type="checkbox" name="selected" value="{{ product.name }}">
+                        {% for allergy in product.allergens %}
+                            {{ allergy }},
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <label for="quantity" hidden="hidden"></label>
+                        <input id="quantity" type="number" name="quantity" min="0" max={{ product.amount }}>
+                        <a href="{% url 'account' %}">add to cart</a>
                     </td>
                 </tr>
             {% endfor %}
         </table>
-        <a href="{% url 'account' %}">
-            <input type="submit" value="Order products"/>
-        </a>
     </form>
+    <div class="center">
+            <a href="{% url 'order' %}">
+                <input type="submit" value="Go to checkout"/>
+            </a>
+    </div>
 
 
 {% endblock %}
