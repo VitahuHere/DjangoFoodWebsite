@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 
 from accounts.models import PersonForm, Person, LoggingForm
 from .forms import RegisterForm, LoginForm
-from packages.models import Package, Product
+from packages.models import Package
 
 
 def account(request):
@@ -64,9 +64,9 @@ def post_account_login(request):
         try:
             login = encrypt_sha256(request.POST['login'])
             if request.method == 'POST':
-                if Person.objects.filter(pk=login).exists():
-                    password = encrypt_sha256(request.POST['password'])
-                    if Person.objects.get(pk=login).password == password:
+                person = Person.objects.filter(pk=login)
+                if person.exists():
+                    if Person.objects.get(pk=login).password == encrypt_sha256(request.POST['password']):
                         r = redirect('/account/')
                         r.set_cookie('login', login)
                         return r
@@ -94,15 +94,12 @@ def post_register_account(request):
     try:
         login = encrypt_sha256(request.POST['login'])
         if request.method == 'POST':
-            if Person.objects.filter(pk=login).exists():
+            person = Person.objects.filter(pk=login)
+            if person.exists():
                 return render(request, 'accounts/redirect existing login.html')
             p = PersonForm(request.POST)
             if p.is_valid():
-                new = p.save(commit=False)
-                new.password = encrypt_sha256(request.POST['password'])
-                new.login = login
-                new.save()
-                p.save_m2m()
+                p.save()
                 r = redirect('/account/')
                 r.set_cookie('login', login)
                 return r

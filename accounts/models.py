@@ -1,4 +1,5 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
+from hashlib import sha256
+
 from django.db import models
 from django.forms import ModelForm
 
@@ -10,6 +11,12 @@ class Person(models.Model):
     surname = models.CharField(max_length=100, default=None)
     birthday = models.DateField(blank=True, null=True)
     address = models.CharField(blank=False, max_length=100, null=True)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.login = sha256(self.login.encode()).hexdigest()
+        self.password = sha256(self.password.encode()).hexdigest()
+        super().save()
 
 
 class PersonForm(ModelForm):
