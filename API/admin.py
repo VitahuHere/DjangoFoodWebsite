@@ -1,5 +1,4 @@
 from django.contrib import admin
+from .models import AccountToken
 
-from API.models import Keys
-
-admin.site.register(Keys)
+admin.site.register(AccountToken)

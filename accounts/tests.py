@@ -1,13 +1,13 @@
 from django.test import TestCase
 import datetime
 
-from .models import Person
+from .models import Account
 from packages.models import Package
 
 
 class AccountTestCase(TestCase):
     def setUp(self):
-        Person.objects.create(
+        Account.objects.create(
             login="login",
             password="password",
             name="Andrew",
@@ -17,7 +17,7 @@ class AccountTestCase(TestCase):
         )
 
     def test_person_creation(self):
-        andrew = Person.objects.get(name="Andrew")
+        andrew = Account.objects.get(name="Andrew")
         self.assertEqual(andrew.surname, "Stewart")
         self.assertEqual(andrew.login, "428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324")
         self.assertEqual(andrew.password, "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8")

@@ -1,11 +1,11 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from django_better_admin_arrayfield.models.fields import ArrayField
-from accounts.models import Person
+from accounts.models import Account
 
 
 class Package(models.Model):
-    client = models.ForeignKey(Person, on_delete=models.CASCADE)
+    client = models.ForeignKey(Account, on_delete=models.CASCADE)
     address = models.CharField(max_length=100, null=False)
     title = models.CharField(max_length=100, null=True)
     contents = ArrayField(

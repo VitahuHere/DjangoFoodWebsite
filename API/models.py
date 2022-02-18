@@ -1,9 +1,13 @@
+import binascii
+import os
+
+from rest_framework.authtoken.models import Token
 from django.db import models
+from accounts.models import Account
 
-from accounts.models import Person
 
+class AccountToken(Token):
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
 
-class Keys(models.Model):
-    person = models.OneToOneField(Person, on_delete=models.CASCADE, primary_key=True)
-    client_id = models.CharField(max_length=100)
-    client_secret = models.CharField(max_length=100)
+    def save(self, *args, **kwargs):
+        self.key = binascii.hexlify(os.urandom(20)).decode()

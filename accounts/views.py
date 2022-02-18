@@ -3,7 +3,7 @@ import hashlib
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 
-from accounts.models import PersonForm, Person, LoggingForm
+from accounts.models import PersonForm, Account, LoggingForm
 from .forms import RegisterForm, LoginForm
 from packages.models import Package
 
@@ -19,7 +19,7 @@ def account(request):
         login = request.COOKIES.get('login')
         try:
             context = {
-                'client': Person.objects.get(login=login),
+                'client': Account.objects.get(login=login),
                 'packages': Package.objects.filter(client=login).values(),
             }
             return render(request, 'accounts/account.html', context=context)
@@ -45,7 +45,7 @@ def logging_in(request):
     :return:
     """
     try:
-        Person.objects.get(login=request.COOKIES.get('login'))
+        Account.objects.get(login=request.COOKIES.get('login'))
         return redirect('/account/')
     except (KeyError, ObjectDoesNotExist):
         return render(request, 'accounts/login.html', {'form': LoginForm})
@@ -64,9 +64,9 @@ def post_account_login(request):
         try:
             login = encrypt_sha256(request.POST['login'])
             if request.method == 'POST':
-                person = Person.objects.filter(pk=login)
+                person = Account.objects.filter(pk=login)
                 if person.exists():
-                    if Person.objects.get(pk=login).password == encrypt_sha256(request.POST['password']):
+                    if Account.objects.get(pk=login).password == encrypt_sha256(request.POST['password']):
                         r = redirect('/account/')
                         r.set_cookie('login', login)
                         return r
@@ -85,7 +85,7 @@ def post_register_account(request):
     Try except for catching not existing db record or not existing 'login' key
     Value from request 'login' is encrypted with sha256
     Checks if login already exists and returns 'redirect existing login.html'
-    Else checks if form is valid and creates new record to Person model
+    Else checks if form is valid and creates new record to Account model
     And redirects to 'account/' url
     :param request:
     :return:
@@ -94,7 +94,7 @@ def post_register_account(request):
     try:
         login = encrypt_sha256(request.POST['login'])
         if request.method == 'POST':
-            person = Person.objects.filter(pk=login)
+            person = Account.objects.filter(pk=login)
             if person.exists():
                 return render(request, 'accounts/redirect existing login.html')
             p = PersonForm(request.POST)

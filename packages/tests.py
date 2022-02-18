@@ -2,12 +2,12 @@ import datetime
 
 from django.test import TestCase
 from .models import Package
-from accounts.models import Person
+from accounts.models import Account
 
 
 class TestPackages(TestCase):
     def setUp(self):
-        Person.objects.create(
+        Account.objects.create(
             login="login",
             password="password",
             name="Andrew",
@@ -17,7 +17,7 @@ class TestPackages(TestCase):
         )
 
     def test_package_creation(self):
-        p = Person.objects.get(name="Andrew")
+        p = Account.objects.get(name="Andrew")
         Package.objects.create(
             client=p,
             address="Jerusalem 123",
