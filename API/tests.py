@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from rest_framework.test import APITestCase
 
@@ -10,7 +11,7 @@ from rest_framework.test import APIClient
 
 
 class TestToken(APITestCase):
-    def setUp(self):
+    def setUp(self) -> None:
         self.user = Account.objects.create(
             login="login",
             password="password",
@@ -27,12 +28,12 @@ class TestToken(APITestCase):
             'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
         }
         # valid credentials
-        response = client.post('/api/post/obtain-auth-token/', data=payload)
-        assert 'Token' in response.data['token']
+        response = client.post('/api/obtain-auth-token/', data=payload)
+        assert response.data['token']
         # invalid credentials
         payload['login'] = 'invalid'
-        response = client.post('/api/post/obtain-auth-token/', data=payload)
-        self.assertEqual(response.status_code, 400)
+        response = client.post('/api/obtain-auth-token/', data=payload)
+        self.assertEqual(response.status_code, 401)
         client.logout()
 
     def test_receiving_token(self):
@@ -43,9 +44,37 @@ class TestToken(APITestCase):
             'login': '428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324',
             'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
         }
-        r = client.post('/api/post/obtain-auth-token/', data=payload)
+        r = client.post('/api/obtain-auth-token/', data=payload)
         self.assertEqual(r.status_code, 200)
-        parse = r.data['token'].split()[1]
-        self.assertEqual(parse, tk)
+        self.assertEqual(r.data['token'], tk)
         client.logout()
+
+
+class TestAccountInformation(APITestCase):
+    def setUp(self) -> None:
+        self.user = Account.objects.create(
+            login="login",
+            password="password",
+            name="Andrew",
+            surname="Stewart",
+            birthday=datetime.date(year=2000, month=10, day=23),
+            address="London street 123",
+        )
+
+    def test_accessing_data(self):
+        token = AccountToken.objects.create(user=self.user)
+        client = APIClient()
+        payload = {
+            'login': '428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        }
+        # request without token
+        r = client.get('/api/get-account-data/', data=payload)
+        self.assertEqual(r.status_code, 403)
+        # request with token
+        client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        r = client.get('/api/get-account-data/', data=payload)
+        self.assertEqual(r.status_code, 200)
+        client.logout()
+
 

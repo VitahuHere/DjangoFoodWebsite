@@ -12,8 +12,7 @@ class Account(models.Model):
     birthday = models.DateField(blank=True, null=True)
     address = models.CharField(blank=False, max_length=100, null=True)
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None) -> None:
         self.login = sha256(self.login.encode()).hexdigest()
         self.password = sha256(self.password.encode()).hexdigest()
         super().save()
