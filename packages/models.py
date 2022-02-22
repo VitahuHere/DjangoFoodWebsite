@@ -7,7 +7,7 @@ from accounts.models import Account
 class Package(models.Model):
     client = models.ForeignKey(Account, on_delete=models.CASCADE)
     address = models.CharField(max_length=100, null=False)
-    title = models.CharField(max_length=100, null=True)
+    title = models.CharField(max_length=100, default="")
     contents = ArrayField(
         models.CharField(max_length=100, blank=True),
         blank=False,
