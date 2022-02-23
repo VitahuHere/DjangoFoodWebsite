@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework.test import APIClient
 from rest_framework.test import APITestCase
-from packages.models import Package, Product
+from packages.models import Package, Product, Status
 from accounts.models import Account
 from .models import AccountToken
 
@@ -135,5 +135,77 @@ class TestPackages(APITestCase):
 
         c.logout()
 
-        def test_package_status():
-            ...
+    def test_package_status(self):
+        token = AccountToken.objects.create(user=self.user)
+        state = Status.objects.create(pk="Package ready, waiting for delivery")
+        Package.objects.create(
+            client=self.user,
+            address="Jerozolimskie 123 Warsaw",
+            title="nothing",
+            contents=[
+                {'spaghetti: 500'},
+                {'canned tomatoes: 400'},
+                {'garlic: 5'},
+            ],
+            status=state,
+        )
+        c = APIClient()
+        endpoint = '/api/check-package-status/'
+
+        # getting package status with invalid credentials, without package id and without token
+        payload = {
+            'login': 'invalid',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        }
+        response = c.get(endpoint, data=payload)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data['detail'], 'Authentication credentials were not provided.')
+
+        # getting package status with valid credentials but without package id and without token
+        payload = {
+            'login': '428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        }
+        response = c.get(endpoint, data=payload)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data['detail'], 'Authentication credentials were not provided.')
+
+        # getting package status with token but invalid credentials and without package id
+        payload = {
+            'login': 'invalid',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        }
+        c.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = c.get(endpoint, data=payload)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data['detail'], 'Invalid credentials')
+
+        # getting package status with token and valid credentials but without package id
+        payload = {
+            'login': '428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        }
+        response = c.get(endpoint, data=payload)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.data['detail'], 'Missing package id')
+
+        # getting package status with token and valid credentials but invalid package id
+        payload = {
+            'login': '428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+            'id': 404,
+        }
+        response = c.get(endpoint, data=payload)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data['detail'], 'Package does not exist')
+
+        # getting package status with token and valid credentials
+        payload = {
+            'login': '428821350e9691491f616b754cd8315fb86d797ab35d843479e732ef90665324',
+            'password': '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+            'id': 1,
+        }
+        response = c.get(endpoint, data=payload)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['detail'], 'Package ready, waiting for delivery')
+

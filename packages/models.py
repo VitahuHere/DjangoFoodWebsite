@@ -4,6 +4,10 @@ from django_better_admin_arrayfield.models.fields import ArrayField
 from accounts.models import Account
 
 
+class Status(models.Model):
+    status = models.CharField(max_length=100, primary_key=True, unique=True)
+
+
 class Package(models.Model):
     client = models.ForeignKey(Account, on_delete=models.CASCADE)
     address = models.CharField(max_length=100, null=False)
@@ -13,6 +17,7 @@ class Package(models.Model):
         blank=False,
         null=False,
     )
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, null=True)
 
 
 class Product(models.Model):
