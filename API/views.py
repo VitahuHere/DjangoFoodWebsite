@@ -5,7 +5,39 @@ from accounts.models import Account
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from packages.models import Package
+from packages.models import Package, Product
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_product(request):
+    try:
+        login = request.POST['login']
+        password = request.POST['password']
+        Account.objects.get(login=login, password=password)
+        try:
+            name = request.POST['name']
+            print(name)
+            amount = request.POST['amount']
+            print(amount)
+            net_weight = request.POST['net_weight']
+            print(net_weight)
+            is_liquid = request.POST['is_liquid']
+            print(is_liquid)
+            allergens = request.POST['allergens']
+            print(allergens)
+            Product.objects.create(
+                name=name,
+                amount=amount,
+                net_weight=net_weight,
+                is_liquid=is_liquid,
+                allergens=allergens,
+            )
+            return Response({'detail': 'Product added successfully'})
+        except KeyError:
+            return Response({'detail': 'Missing product details'}, status=403)
+    except (KeyError, ObjectDoesNotExist):
+        return Response({'detail': 'Invalid credentials'}, status=403)
 
 
 @api_view(['GET'])
