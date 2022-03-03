@@ -17,15 +17,10 @@ def create_product(request):
         Account.objects.get(login=login, password=password)
         try:
             name = request.POST['name']
-            print(name)
             amount = request.POST['amount']
-            print(amount)
             net_weight = request.POST['net_weight']
-            print(net_weight)
             is_liquid = request.POST['is_liquid']
-            print(is_liquid)
             allergens = request.POST['allergens']
-            print(allergens)
             Product.objects.create(
                 name=name,
                 amount=amount,
